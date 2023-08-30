@@ -14,6 +14,6 @@ get_response = requests.get(endpoint,params={"abc":123}, json={"query":"Hello Wo
 
 print("-"*20)
 
-print(get_response.headers)
+print(get_response.json())
 
 print(get_response.status_code)
