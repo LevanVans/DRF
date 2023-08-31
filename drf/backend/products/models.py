@@ -14,4 +14,7 @@ class Product(models.Model):
         return self.price - 1
     
     def get_discount(self):
-        return self.price + 100
+        try:
+            return self.price + 100
+        except:
+            return None
