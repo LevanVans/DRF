@@ -2,14 +2,14 @@ import requests
 
 
 
-endpoint = "http://127.0.0.1:8000/api/products/1/"
+endpoint = "http://127.0.0.1:8000/api/products/12/"
 
 
 #endpoint = "http://127.0.0.1:8000/api/products/"
 
 
 
-get_response = requests.get(endpoint, json={"title":"Hello Man"})
+get_response = requests.post(endpoint, json={"title":"Hello Mixin"})
 
 print("-"*20)
 
