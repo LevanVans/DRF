@@ -4,13 +4,22 @@ from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
 
+#alt view imports
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+
+
 #Get one item
 class ProductDetailApiView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     
     serializer_class = ProductSerializer
     #lookup_field = 'pk'
-    
+
+
 
 # Post one item 
 class ProductDetailCreateApiView(generics.CreateAPIView):
@@ -18,8 +27,7 @@ class ProductDetailCreateApiView(generics.CreateAPIView):
     
     serializer_class = ProductSerializer
     
-    
-    
+       
     
     def perform_create(self, serializer):
         
@@ -44,3 +52,41 @@ class ProductListApiView(generics.ListAPIView):
     serializer_class = ProductSerializer
 
     
+    
+    
+# Alt View 
+@api_view(["GET","POST"])
+def product_alt_view(request, pk=None):
+    
+    if request.method == "GET":
+        
+        if pk is not None:
+            
+            
+            obj = get_object_or_404(Product, pk = pk)
+            
+            data = ProductSerializer(obj, many=False).data
+            
+            return Response(data)
+        
+        queryset = Product.objects.all()
+    
+        data = ProductSerializer(queryset, many=True).data
+        
+        return Response(data)
+    
+    if request.method == "POST":
+        
+        serializer = ProductSerializer(data=request.data)
+        
+        if serializer.is_valid(raise_exception=True):
+            
+            
+            content = serializer.validated_data.get("content") or None
+            
+            if content is None:
+                content = "This field is empty from ALT"
+                
+            serializer.save(content=content)
+            
+            return Response(serializer.data)
