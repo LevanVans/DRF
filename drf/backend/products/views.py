@@ -90,3 +90,34 @@ def product_alt_view(request, pk=None):
             serializer.save(content=content)
             
             return Response(serializer.data)
+        
+        
+#Update View
+
+class ProductUpdateApiView(generics.UpdateAPIView):
+    
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    
+    lookup_field = 'pk'
+    
+    def perfome_update(self, serializer):
+        
+        instance = serializer.save()
+        
+        
+        
+#Destroy 
+
+
+
+class ProductDestroyApiView(generics.DestroyAPIView):
+    
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    
+    lookup_field = 'pk'
+    
+    def perfome_destroy(self, instance):
+        
+        super().perform_destroy(instance)
