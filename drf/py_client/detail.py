@@ -9,7 +9,7 @@ endpoint = "http://127.0.0.1:8000/api/products/create/"
 
 
 
-get_response = requests.post(endpoint, json={"title":"Hello Man","content":"Good"})
+get_response = requests.post(endpoint, json={"title":"Hello Man"})
 
 print("-"*20)
 
